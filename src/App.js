@@ -1,9 +1,16 @@
 import React from 'react';
-import {Route,Switch} from 'react-router-dom'
+
+// styles
 import './App.css';
+import 'react-notifications/lib/notifications.css'
+
+// Libraries
+import {Route,Switch} from 'react-router-dom'
+import {NotificationContainer, NotificationManager} from 'react-notifications'
 
 import Header from './components/header/header.comp'
 
+// Pages
 import Welcome from './pages/welcome/welcome.comp'
 import Learn from './pages/learn/learn.comp'
 import Login from './pages/login/login.comp'
@@ -26,8 +33,9 @@ class App extends React.Component {
       if (!userAuth){
           this.setState({currentUser : null})
       }else{
-
+        console.log('User information--> ',userAuth)
         this.setState({currentUser : userAuth})
+        NotificationManager.success('Successfully signed in!','Sign in',2000)
       }
       
     })
@@ -43,6 +51,7 @@ class App extends React.Component {
       <div className="App">
         <div className='container'>
           <Header currentUser = {this.state.currentUser}/>
+          <NotificationContainer/>
           <Switch>
             
             <Route path='/welcome' component={Welcome} />
@@ -50,6 +59,7 @@ class App extends React.Component {
             <Route path='/login' component={Login} />
           
           </Switch>
+        <Header currentUser = {this.state.currentUser}/>
         </div>
       </div>
     );
